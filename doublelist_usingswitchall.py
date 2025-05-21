@@ -46,86 +46,77 @@ class DoubleLinkedList:
         temp.next=newnode
         newnode.prev=temp
 
-    def InsertAfter(self,ele,key):
+    def insertAfter(self,ele,key):
         newnode=Node(None,ele,None)
-        if self.head==None:
+        if self.head ==None:
             self.head=newnode
         temp=self.head
-        while temp and  temp.data!=key:
+        while temp and temp.data!=key:
             temp=temp.next
         if temp==None:
-            print("Key not found")
-            return
+            print("Node not found ")
         newnode.prev=temp
         newnode.next=temp.next
         if temp.next!=None:
             temp.next.prev=newnode
         temp.next=newnode
-    
-    def InsertBefore(self,ele,key):
+
+    def insertBefore(self,ele,key):
         newnode=Node(None,ele,None)
         if self.head==None:
             self.head=newnode
         temp=self.head
-        while temp and  temp.data!=key:
+        while temp and temp.data!=key:
             temp=temp.next
         if temp==None:
-            print("Key not found")
-            return
+            print("Node not found")
         newnode.next=temp
         newnode.prev=temp.prev
         if temp.prev!=None:
             temp.prev.next=newnode
-        else:
-            self.head=newnode
         temp.prev=newnode
 
-    def DeleteBegin(self,ele):
+    def deleteBegin(self):
         if self.head==None:
-            print("List is empty")
-        if self.head.next==None:
-            self.head=None
+            print("List is empty") 
         temp=self.head
+        if self.head.next is None:
+            self.head =None
+            del temp
         self.head=self.head.next
         self.head.prev=None
         del temp
     
-    def DeleteEnd(self,ele):
-        if self.head==None:
-            print("Dll id empty")
-        if self.head.next==None:
-            self.head=None
+    def deleteEnd(self):
 
+        if self.head==None:
+            print("List is empty")
+            return 
         temp=self.head
+        if self.head.next is None:
+            self.head=None
+            del temp
         while temp.next!=None:
             temp=temp.next
         temp.prev.next=None
         del temp
-    
-    def Delete_at_specifiednode(self,key,ele):
+
+    def deleteAfterVal(self,key):
         if self.head==None:
-            print("e\list s empty")
+            print("List is empty ")
         temp=self.head
-        while temp!=None and temp.data!=key:
+        while temp!=None and temp.data!= key:
             temp=temp.next
         if temp==None:
-            print("node not found")
+            print("Node not found")
         if temp.next==None:
-            print("none to be delete dnt found")
-            eleminate=temp.next
-            temp.next=eleminate.next
-        if eleminate.next!=None:
-            eleminate.next.prev=temp
-        del eleminate
+            print("Node not found")
+        delete=temp.next
+        temp.next=delete.next
+        if delete.next is None:
+            delete.next.prev=temp
+        del delete
 
-
-
-    
-
-
-
-
-        
 
 # Pre-inserting nodes manually
 n1 = Node(None, 10, None)
@@ -140,38 +131,38 @@ n3.next = n4
 dll = DoubleLinkedList()
 dll.head = n1
 
-print("Original Forward Traversal:")
-dll.traverse()
-print("Original Backward Traversal:")
-dll.traverseBack()
-
-ele = int(input("Enter element to insert at the beginning: "))
-dll.insertBegin(ele)
-
-ele = int(input("Enter element to insert at the end: "))
-dll.insertEnd(ele)
-dll.traverse()
-
-ele = int(input("Enter element to insert after a key: "))
-key = int(input("Enter key to insert after: "))
-dll.InsertAfter(ele, key)
-dll.traverse()
-
-ele = int(input("Enter element to insert before a key: "))
-key = int(input("Enter key to insert before: "))
-dll.InsertBefore(ele, key)
-dll.traverse()
-
-print("List after deleting the first element:")
-dll.DeleteBegin(ele)
-dll.traverse()
-
-print("list after Delete at the End ")
-dll.DeleteEnd(ele)
-dll.traverse()
-
-key=int(input("enter the element you want to eliminate "))
-dll.Delete_at_specifiednode(key,ele)
-dll.traverse()
-
-
+while True:
+    print("\n1. Insert Begin\n2. Insert Last\n3.Insert before \n4. Insert after a node\n5. Delete begining\n6.Delete end  \n7.delete a node after a specifie node \n8. Exit")
+    ch = int(input("Enter your choice: "))
+    if ch == 1:
+        ele = int(input("Enter the element to insert at beginning: "))
+        dll.insertBegin(ele)
+        dll.traverse()
+    elif ch == 2:
+        ele = int(input("Enter the element to insert at last: "))
+        dll.insertEnd(ele)
+        dll.traverse()
+    elif ch == 3:
+        ele = int(input("Enter the element to insert: "))
+        key = int(input("Enter the node before which to insert: "))
+        dll.insertBefore(ele, key)
+        dll.traverse()
+    elif ch == 4:
+        ele = int(input("Enter the element to insert: "))
+        key = int(input("Enter the node after which to insert: "))
+        dll.insertAfter(ele, key)
+        dll.traverse()
+    elif ch==5:
+        dll.deleteBegin()
+        dll.traverse()
+    elif ch==6:
+        dll.deleteEnd()
+        dll.traverse()
+    elif ch==7:
+        key=int(input("Enter a elemnt to delete after "))
+        dll.deleteAfterVal(key)
+        dll.traverse()
+    elif ch == 8:
+        break
+    else:
+        print("Invalid choice, try again.")
